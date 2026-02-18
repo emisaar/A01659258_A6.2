@@ -28,8 +28,11 @@ class Hotel:
         """Load hotels from JSON file."""
         if not os.path.exists(cls.DATA_FILE):
             return []
-        with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return []
 
     @classmethod
     def _save_hotels(cls, hotels):
@@ -40,6 +43,12 @@ class Hotel:
     @classmethod
     def create_hotel(cls, name, location, rooms):
         """Create a new hotel and save it."""
+        if not name or not location:
+            print("Error: name and location are required.")
+            return None
+        if not isinstance(rooms, int) or rooms < 1:
+            print("Error: rooms must be a positive integer.")
+            return None
         hotels = cls._load_hotels()
         hotel_id = max((h["hotel_id"] for h in hotels), default=0) + 1
         hotel = cls(hotel_id, name, location, rooms)
@@ -51,7 +60,11 @@ class Hotel:
     def delete_hotel(cls, hotel_id):
         """Delete a hotel by ID."""
         hotels = cls._load_hotels()
+        original_len = len(hotels)
         hotels = [h for h in hotels if h["hotel_id"] != hotel_id]
+        if len(hotels) == original_len:
+            print(f"Error: Hotel {hotel_id} not found.")
+            return False
         cls._save_hotels(hotels)
         return True
 
@@ -85,6 +98,9 @@ class Hotel:
         hotels = cls._load_hotels()
         for h in hotels:
             if h["hotel_id"] == hotel_id:
+                if h["rooms"] < 1:
+                    print("Error: No rooms available.")
+                    return False
                 h["rooms"] -= 1
                 cls._save_hotels(hotels)
                 return True

@@ -22,6 +22,8 @@ class TestHotel(unittest.TestCase):
         if os.path.exists(self.temp_file):
             os.remove(self.temp_file)
 
+    # Positive tests
+
     def test_create_hotel(self):
         """Test creating a hotel."""
         hotel = Hotel.create_hotel("Emporio", "Acapulco", 100)
@@ -64,6 +66,44 @@ class TestHotel(unittest.TestCase):
         Hotel.cancel_reservation(1)
         info = Hotel.display_hotel(1)
         self.assertEqual(info["rooms"], 5)
+
+    # Negative tests
+
+    def test_create_hotel_invalid_name(self):
+        """Test creating hotel with empty name."""
+        result = Hotel.create_hotel("", "Acapulco", 10)
+        self.assertIsNone(result)
+
+    def test_delete_nonexistent_hotel(self):
+        """Test deleting a hotel that doesn't exist."""
+        self.assertFalse(Hotel.delete_hotel(999))
+
+    def test_display_nonexistent_hotel(self):
+        """Test displaying a hotel that doesn't exist."""
+        result = Hotel.display_hotel(999)
+        self.assertIsNone(result)
+
+    def test_modify_nonexistent_hotel(self):
+        """Test modifying a hotel that doesn't exist."""
+        result = Hotel.modify_hotel(999, name="X")
+        self.assertIsNone(result)
+
+    def test_cancel_reservation_nonexistent(self):
+        """Test cancelling reservation for nonexistent hotel."""
+        self.assertFalse(Hotel.cancel_reservation(999))
+
+    def test_reserve_room_no_availability(self):
+        """Test reserving when no rooms available."""
+        Hotel.create_hotel("Emporio", "Acapulco", 1)
+        Hotel.reserve_room(1)
+        self.assertFalse(Hotel.reserve_room(1))
+
+    def test_load_corrupted_file(self):
+        """Test loading a corrupted JSON file."""
+        with open(self.temp_file, "w", encoding="utf-8") as f:
+            f.write("not valid json{{{")
+        hotels = Hotel._load_hotels()
+        self.assertEqual(hotels, [])
 
 
 if __name__ == "__main__":
