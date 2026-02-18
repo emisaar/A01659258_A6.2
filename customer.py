@@ -28,8 +28,11 @@ class Customer:
         """Load customers from JSON file."""
         if not os.path.exists(cls.DATA_FILE):
             return []
-        with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return []
 
     @classmethod
     def _save_customers(cls, customers):
@@ -40,6 +43,9 @@ class Customer:
     @classmethod
     def create_customer(cls, name, surname, email):
         """Create a new customer and save it."""
+        if not name or not surname or not email:
+            print("Error: name, surname and email are required.")
+            return None
         customers = cls._load_customers()
         customer_id = max(
             (c["customer_id"] for c in customers), default=0
@@ -53,9 +59,13 @@ class Customer:
     def delete_customer(cls, customer_id):
         """Delete a customer by ID."""
         customers = cls._load_customers()
+        original_len = len(customers)
         customers = [
             c for c in customers if c["customer_id"] != customer_id
         ]
+        if len(customers) == original_len:
+            print(f"Error: Customer {customer_id} not found.")
+            return False
         cls._save_customers(customers)
         return True
 
