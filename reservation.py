@@ -29,8 +29,11 @@ class Reservation:
         """Load reservations from JSON file."""
         if not os.path.exists(cls.DATA_FILE):
             return []
-        with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return []
 
     @classmethod
     def _save_reservations(cls, reservations):

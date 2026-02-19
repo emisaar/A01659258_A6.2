@@ -33,6 +33,8 @@ class TestReservation(unittest.TestCase):
             if os.path.exists(path):
                 os.remove(path)
 
+    # Positive tests
+
     def test_create_reservation(self):
         """Test creating a reservation."""
         Customer.create_customer("Rosalina", "Smith", "rosalina@test.com")
@@ -52,6 +54,26 @@ class TestReservation(unittest.TestCase):
         self.assertTrue(Reservation.cancel_reservation(1))
         info = Hotel.display_hotel(1)
         self.assertEqual(info["rooms"], 5)
+
+
+    # Negative tests
+
+    def test_create_reservation_nonexistent_customer(self):
+        """Test reservation with nonexistent customer."""
+        Hotel.create_hotel("Emporio", "Acapulco", 5)
+        result = Reservation.create_reservation(999, 1)
+        self.assertIsNone(result)
+
+    def test_cancel_nonexistent_reservation(self):
+        """Test cancelling a reservation that doesn't exist."""
+        self.assertFalse(Reservation.cancel_reservation(999))
+
+    def test_load_corrupted_file(self):
+        """Test loading a corrupted reservations file."""
+        with open(Reservation.DATA_FILE, "w", encoding="utf-8") as f:
+            f.write("not valid json")
+        reservations = Reservation._load_reservations()
+        self.assertEqual(reservations, [])
 
 
 if __name__ == "__main__":
