@@ -55,7 +55,6 @@ class TestReservation(unittest.TestCase):
         info = Hotel.display_hotel(1)
         self.assertEqual(info["rooms"], 5)
 
-
     # Negative tests
 
     def test_create_reservation_nonexistent_customer(self):

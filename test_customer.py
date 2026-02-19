@@ -26,7 +26,9 @@ class TestCustomer(unittest.TestCase):
 
     def test_create_customer(self):
         """Test creating a customer."""
-        customer = Customer.create_customer("Rosalina", "Smith", "rosalina@test.com")
+        customer = Customer.create_customer(
+            "Rosalina", "Smith", "rosalina@test.com"
+        )
         self.assertIsNotNone(customer)
         self.assertEqual(customer.name, "Rosalina")
         self.assertEqual(customer.surname, "Smith")
@@ -54,7 +56,6 @@ class TestCustomer(unittest.TestCase):
         self.assertEqual(result["name"], "Jana")
         self.assertEqual(result["surname"], "Ruiz")
         self.assertEqual(result["email"], "jana@test.com")
-
 
     # Negative tests
 
