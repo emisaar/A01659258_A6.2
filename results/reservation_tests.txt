@@ -1,0 +1,67 @@
+=========================================
+Reservation Class - Test Results
+=========================================
+
+--- Unit Tests ---
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad
+plugins: cov-7.0.0
+collecting ... collected 5 items
+
+test_reservation.py::TestReservation::test_cancel_nonexistent_reservation PASSED [ 20%]
+test_reservation.py::TestReservation::test_cancel_reservation PASSED     [ 40%]
+test_reservation.py::TestReservation::test_create_reservation PASSED     [ 60%]
+test_reservation.py::TestReservation::test_create_reservation_nonexistent_customer PASSED [ 80%]
+test_reservation.py::TestReservation::test_load_corrupted_file PASSED    [100%]
+
+============================== 5 passed in 0.01s ===============================
+
+--- Code Coverage ---
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
+rootdir: /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad
+plugins: cov-7.0.0
+collected 5 items
+
+test_reservation.py .....                                                [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.14.2-final-0 _______________
+
+Name             Stmts   Miss  Cover   Missing
+----------------------------------------------
+reservation.py      54      1    98%   52
+----------------------------------------------
+TOTAL               54      1    98%
+============================== 5 passed in 0.02s ===============================
+
+--- Flake8 ---
+
+--- Pylint ---
+************* Module reservation
+reservation.py:1:0: R0801: Similar lines in 2 files
+==customer:[23:40]
+==hotel:[23:40]
+        }
+
+    @classmethod
+    def _load_hotels(cls):
+        """Load hotels from JSON file."""
+        if not os.path.exists(cls.DATA_FILE):
+            return []
+        try:
+            with open(cls.DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return []
+
+    @classmethod
+    def _save_hotels(cls, hotels):
+        """Save hotels list to JSON file."""
+        with open(cls.DATA_FILE, "w", encoding="utf-8") as f: (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 9.95/10 (previous run: 9.95/10, +0.00)
+

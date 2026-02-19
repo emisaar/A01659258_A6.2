@@ -1,0 +1,54 @@
+=========================================
+Hotel Class - Test Results
+=========================================
+
+--- Unit Tests ---
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad
+plugins: cov-7.0.0
+collecting ... collected 13 items
+
+test_hotel.py::TestHotel::test_cancel_reservation PASSED                 [  7%]
+test_hotel.py::TestHotel::test_cancel_reservation_nonexistent PASSED     [ 15%]
+test_hotel.py::TestHotel::test_create_hotel PASSED                       [ 23%]
+test_hotel.py::TestHotel::test_create_hotel_invalid_name PASSED          [ 30%]
+test_hotel.py::TestHotel::test_delete_hotel PASSED                       [ 38%]
+test_hotel.py::TestHotel::test_delete_nonexistent_hotel PASSED           [ 46%]
+test_hotel.py::TestHotel::test_display_hotel PASSED                      [ 53%]
+test_hotel.py::TestHotel::test_display_nonexistent_hotel PASSED          [ 61%]
+test_hotel.py::TestHotel::test_load_corrupted_file PASSED                [ 69%]
+test_hotel.py::TestHotel::test_modify_hotel PASSED                       [ 76%]
+test_hotel.py::TestHotel::test_modify_nonexistent_hotel PASSED           [ 84%]
+test_hotel.py::TestHotel::test_reserve_room PASSED                       [ 92%]
+test_hotel.py::TestHotel::test_reserve_room_no_availability PASSED       [100%]
+
+============================== 13 passed in 0.01s ==============================
+
+--- Code Coverage ---
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
+rootdir: /Users/emisaucedo/Documents/MNA/Trim 5/Pruebas Software/Semana 6/actividad
+plugins: cov-7.0.0
+collected 13 items
+
+test_hotel.py .............                                              [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.14.2-final-0 _______________
+
+Name       Stmts   Miss  Cover   Missing
+----------------------------------------
+hotel.py      88      3    97%   50-51, 107
+----------------------------------------
+TOTAL         88      3    97%
+============================== 13 passed in 0.02s ==============================
+
+--- Flake8 ---
+
+--- Pylint ---
+
+------------------------------------
+Your code has been rated at 10.00/10
+
